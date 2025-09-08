@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar/navbar';
 import Footer from '../components/footer/footer';
 import Products from '../components/products/Products';
-import './categories.css';
+import './Categories.css';
 
 // API base URL, fallback to localhost if not defined in environment variables
 const API_BASE = import.meta.env.VITE_API_BASE || "http://127.0.0.1:8000";
