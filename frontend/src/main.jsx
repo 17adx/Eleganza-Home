@@ -14,7 +14,7 @@ import './index.css'
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename='/Eleganza-Home'>
       <App />
     </BrowserRouter>
   </React.StrictMode>
