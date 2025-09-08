@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import Navbar from '../components/navbar/navbar';
-import Footer from '../components/Footer/footer';
+import Navbar from '../components/Navbar/navbar';
+import Footer from '../components/footer/footer';
 import { useCart } from '../contexts/CartContext/CartContext';
 import {
   Card,

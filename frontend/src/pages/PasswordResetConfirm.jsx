@@ -1,8 +1,8 @@
 import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 import axios from 'axios';
-import Navbar from '../components/navbar/navbar';
-import Footer from '../components/Footer/footer';
+import Navbar from '../components/Navbar/navbar';
+import Footer from '../components/footer/footer';
 import Swal from 'sweetalert2';
 
 const PasswordResetConfirm = () => {

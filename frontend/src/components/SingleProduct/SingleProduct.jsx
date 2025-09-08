@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import Navbar from '../navbar/navbar';
-import Footer from '../Footer/footer';
+import Navbar from '../Navbar/navbar';
+import Footer from '../footer/footer';
 import { useCart } from '../../contexts/CartContext/CartContext';
 import { useUser } from '../../contexts/UserContext/UserContext';
 import { Container, Row, Col, Button, Spinner, Badge, Carousel, Form, Alert, Card } from 'react-bootstrap';
