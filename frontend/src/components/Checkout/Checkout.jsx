@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../navbar/navbar";
-import Footer from "../Footer/footer";
+import Navbar from "../Navbar/navbar";
+import Footer from "../footer/footer";
 import { useUser } from "../../contexts/UserContext/UserContext";
 import { useCart } from "../../contexts/CartContext/CartContext";
 import { Container, Form, Button, Spinner } from "react-bootstrap";
