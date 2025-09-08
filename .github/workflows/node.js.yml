@@ -10,28 +10,27 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [ "lts/*" ]  # أحدث نسخة LTS
+
     steps:
       - uses: actions/checkout@v4
 
-      # Setup latest Node.js LTS
-      - name: Setup Node.js (latest LTS)
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
-          node-version: "lts/*"  # latest LTS version
+          node-version: ${{ matrix.node-version }}
           cache: 'npm'
 
-      # Install dependencies cleanly
-      - name: Install dependencies
+      - name: Install Dependencies
+        working-directory: ./frontend
         run: npm ci
 
-      # Build the project (if build script exists)
-      - name: Build project
+      - name: Build
+        working-directory: ./frontend
         run: npm run build --if-present
 
-      # Run tests (if test script exists)
-      - name: Run tests
+      - name: Run Tests
+        working-directory: ./frontend
         run: npm test
-
-      # Optional: list installed packages and versions (debug)
-      - name: Show installed packages
-        run: npm list --depth=0
