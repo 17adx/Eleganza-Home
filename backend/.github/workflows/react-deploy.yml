@@ -1,0 +1,39 @@
+name: Deploy React to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout repo
+      - uses: actions/checkout@v4
+
+      # 2. Setup Node.js (أحدث نسخة LTS)
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+
+      # 3. Install dependencies داخل مجلد frontend
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      # 4. Build project
+      - name: Build React project
+        working-directory: frontend
+        run: npm run build
+
+      # 5. Deploy to GitHub Pages
+      - name: Deploy
+        if: success() && always() # يتأكد أن خطوة النشر تعمل فقط إذا Build نجح
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GH_PAGES_TOKEN }}  # ضع هنا الـ secret الخاص بالtoken
+          publish_dir: frontend/dist
+          user_name: '17adx'
+          user_email: '17adx@users.noreply.github.com'
