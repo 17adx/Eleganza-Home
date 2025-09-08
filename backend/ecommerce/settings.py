@@ -1,6 +1,8 @@
 from pathlib import Path
 import os
 from datetime import timedelta
+import dj_database_url
+
 
 # -----------------------------------
 # Base directory of the project
@@ -81,14 +83,9 @@ WSGI_APPLICATION = "ecommerce.wsgi.application"
 # Database configuration (SQLite for dev)
 # -----------------------------------
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('POSTGRES_DB'),
-        'USER': os.environ.get('POSTGRES_USER'),
-        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
-        'HOST': os.environ.get('POSTGRES_HOST'),
-        'PORT': os.environ.get('POSTGRES_PORT', '5432'),
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL')
+    )
 }
 
 # -----------------------------------
