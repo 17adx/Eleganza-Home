@@ -37,7 +37,7 @@ const Wishlist = () => {
     const fetchWishlist = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:8000/api/catalog/wishlist/",
+          "https://eleganza-home.onrender.com/api/catalog/wishlist/",
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
@@ -73,7 +73,7 @@ const Wishlist = () => {
     const token = localStorage.getItem("access");
     try {
       await axios.delete(
-        `http://localhost:8000/api/catalog/wishlist/${itemId}/`,
+        `https://eleganza-home.onrender.com/api/catalog/wishlist/${itemId}/`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setWishlist((prev) => prev.filter((item) => item.id !== itemId));
@@ -91,7 +91,7 @@ const Wishlist = () => {
     const token = localStorage.getItem("access");
     try {
       await axios.patch(
-        `http://localhost:8000/api/catalog/wishlist/${currentItem.id}/`,
+        `https://eleganza-home.onrender.com/api/catalog/wishlist/${currentItem.id}/`,
         { quantity },
         { headers: { Authorization: `Bearer ${token}` } }
       );

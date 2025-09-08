@@ -90,21 +90,21 @@ const Login = ({ loginData, setLoginData, handleLogin, handleInputChange }) => {
           <button
             type="button"
             className="button-log"
-            onClick={() => handleSocialLogin("http://localhost:8000/api/auth/login/twitter/")}
+            onClick={() => handleSocialLogin("https://eleganza-home.onrender.com/api/auth/login/twitter/")}
           >
             x
           </button>
           <button
             type="button"
             className="button-log"
-            onClick={() => handleSocialLogin("http://localhost:8000/api/auth/login/google-oauth2/")}
+            onClick={() => handleSocialLogin("https://eleganza-home.onrender.com/api/auth/login/google-oauth2/")}
           >
             G
           </button>
           <button
             type="button"
             className="button-log"
-            onClick={() => handleSocialLogin("http://localhost:8000/api/auth/login/facebook/")}
+            onClick={() => handleSocialLogin("https://eleganza-home.onrender.com/api/auth/login/facebook/")}
           >
             {/* Facebook SVG Icon */}
             <svg className="w-6 h-6" viewBox="0 0 56.693 56.693">

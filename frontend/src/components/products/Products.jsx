@@ -8,7 +8,7 @@ import './products.css';
 
 const Products = ({ selectedCategory }) => {
   // --- Axios instance with base URL ---
-  const API = axios.create({ baseURL: 'http://localhost:8000/api' });
+  const API = axios.create({ baseURL: 'https://eleganza-home.onrender.com/api' });
 
   // --- Catalog API helper functions ---
   const catalog = {

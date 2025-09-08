@@ -7,7 +7,7 @@ import { useUser } from '../../contexts/UserContext/UserContext';
 import { Container, Row, Col, Button, Spinner, Badge, Carousel, Form, Alert, Card } from 'react-bootstrap';
 import './SingleProduct.css';
 
-const API_BASE = 'http://localhost:8000/api';
+const API_BASE = 'https://eleganza-home.onrender.com/api';
 
 const SingleProduct = () => {
   const { id } = useParams(); // Extract product ID from URL

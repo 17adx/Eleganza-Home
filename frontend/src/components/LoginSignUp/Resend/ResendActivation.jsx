@@ -22,7 +22,7 @@ const ResendActivation = () => {
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:8000/api/auth/resend-activation/", {
+      const res = await fetch("https://eleganza-home.onrender.com/api/auth/resend-activation/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

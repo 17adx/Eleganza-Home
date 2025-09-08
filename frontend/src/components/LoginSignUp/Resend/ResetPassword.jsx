@@ -14,7 +14,7 @@ const ResetPassword = ({ closeModal }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8000/api/auth/users/reset_password/", {
+      const res = await fetch("https://eleganza-home.onrender.com/api/auth/users/reset_password/", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),

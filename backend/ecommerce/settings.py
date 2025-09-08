@@ -9,7 +9,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Security key & debug
 SECRET_KEY = os.environ.get("SECRET_KEY")  # Keep secret in environment variable
-DEBUG = True  # Set to False in production
+DEBUG = False  # Set to False in production
 ALLOWED_HOSTS = ["*"]  # Allow all hosts for development
 
 # -----------------------------------
@@ -187,10 +187,10 @@ SIMPLE_JWT = {
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
+    "https://17adx.github.io/Eleganza-Home/",
 ]
 CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:5173",
+    "https://17adx.github.io/Eleganza-Home/",
 ]
 
 # -----------------------------------
@@ -219,7 +219,7 @@ DJOSER = {
 }
 
 # Frontend domain
-DOMAIN = "localhost:5173"
+DOMAIN = "https://17adx.github.io/Eleganza-Home/"
 
 # Optional account verification
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"

@@ -21,7 +21,7 @@ const Orders = () => {
     const token = localStorage.getItem("access");
     if (!token) return logout();
 
-    axios.get("http://localhost:8000/api/orders/orders/", { 
+    axios.get("https://eleganza-home.onrender.com/api/orders/orders/", { 
       headers: { Authorization: `Bearer ${token}` } 
     })
     .then(res => {
@@ -45,7 +45,7 @@ const Orders = () => {
     const token = localStorage.getItem("access");
     try {
       await axios.patch(
-        `http://localhost:8000/api/orders/orders/${orderId}/`, 
+        `https://eleganza-home.onrender.com/api/orders/orders/${orderId}/`, 
         { status: newStatus }, 
         { headers: { Authorization: `Bearer ${token}` } }
       );

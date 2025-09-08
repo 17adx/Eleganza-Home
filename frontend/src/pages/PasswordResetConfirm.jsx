@@ -25,7 +25,7 @@ const PasswordResetConfirm = () => {
 
     try {
       // Send password reset confirmation to backend
-      await axios.post('http://localhost:8000/api/auth/users/reset_password_confirm/', {
+      await axios.post('https://eleganza-home.onrender.com/api/auth/users/reset_password_confirm/', {
         uid, 
         token, 
         new_password: password

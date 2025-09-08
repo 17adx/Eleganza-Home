@@ -36,7 +36,7 @@ const UserProfile = () => {
     }
 
     axios
-      .get("http://localhost:8000/api/auth/me/profile/", {
+      .get("https://eleganza-home.onrender.com/api/auth/me/profile/", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -111,7 +111,7 @@ const UserProfile = () => {
       }
 
       await axios.put(
-        "http://localhost:8000/api/auth/me/profile/",
+        "https://eleganza-home.onrender.com/api/auth/me/profile/",
         formPayload,
         {
           headers: {

@@ -175,7 +175,7 @@ const LoginSignUp = () => {
       }
 
       // Register new user
-      const res = await fetch("http://localhost:8000/api/auth/register/", {
+      const res = await fetch("https://eleganza-home.onrender.com/api/auth/register/", {
         method: "POST",
         body: formData,
       });
@@ -187,7 +187,7 @@ const LoginSignUp = () => {
 
       // Attempt to resend activation email
       try {
-        await fetch("http://localhost:8000/api/auth/resend-activation/", {
+        await fetch("https://eleganza-home.onrender.com/api/auth/resend-activation/", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email: signupData.email }),

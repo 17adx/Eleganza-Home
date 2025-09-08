@@ -48,23 +48,23 @@ const SellerDashboard = () => {
       try {
         // Fetch profile info
         const profileRes = await axios.get(
-          "http://localhost:8000/api/auth/me/profile/",
+          "https://eleganza-home.onrender.com/api/auth/me/profile/",
           { headers }
         );
         setProfileData(profileRes.data);
 
         // Fetch seller's products
         const productsRes = await axios.get(
-          "http://localhost:8000/api/catalog/products/seller/",
+          "https://eleganza-home.onrender.com/api/catalog/products/seller/",
           { headers }
         );
         setProducts(productsRes.data);
 
         // Fetch categories, brands, and tags simultaneously
         const [categoriesRes, brandsRes, tagsRes] = await Promise.all([
-          axios.get("http://localhost:8000/api/catalog/categories/", { headers }),
-          axios.get("http://localhost:8000/api/catalog/brands/", { headers }),
-          axios.get("http://localhost:8000/api/catalog/tags/", { headers }),
+          axios.get("https://eleganza-home.onrender.com/api/catalog/categories/", { headers }),
+          axios.get("https://eleganza-home.onrender.com/api/catalog/brands/", { headers }),
+          axios.get("https://eleganza-home.onrender.com/api/catalog/tags/", { headers }),
         ]);
 
         setCategories(categoriesRes.data.results || []);
@@ -118,7 +118,7 @@ const SellerDashboard = () => {
       }
 
       await axios.put(
-        "http://localhost:8000/api/auth/me/profile/",
+        "https://eleganza-home.onrender.com/api/auth/me/profile/",
         formPayload,
         { headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" } }
       );
@@ -183,7 +183,7 @@ const SellerDashboard = () => {
       if (productForm.id) {
         // Update existing product
         res = await axios.put(
-          `http://localhost:8000/api/catalog/products/${productForm.id}/`,
+          `https://eleganza-home.onrender.com/api/catalog/products/${productForm.id}/`,
           formData,
           { headers: { ...headers, "Content-Type": "multipart/form-data" } }
         );
@@ -191,7 +191,7 @@ const SellerDashboard = () => {
       } else {
         // Add new product
         res = await axios.post(
-          "http://localhost:8000/api/catalog/products/",
+          "https://eleganza-home.onrender.com/api/catalog/products/",
           formData,
           { headers: { ...headers, "Content-Type": "multipart/form-data" } }
         );

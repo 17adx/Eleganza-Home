@@ -42,7 +42,7 @@ export const CartProvider = ({ children }) => {
         }
 
         // Logged-in user's cart: fetch from backend
-        const res = await fetch("http://localhost:8000/api/orders/carts/my/", { headers: getHeaders() });
+        const res = await fetch("https://eleganza-home.onrender.com/api/orders/carts/my/", { headers: getHeaders() });
         if (!res.ok) throw new Error(`Failed to fetch cart: ${res.status}`);
         const data = await res.json();
 
@@ -50,7 +50,7 @@ export const CartProvider = ({ children }) => {
 
         // If no cart exists, create a new one
         if (!cart) {
-          const createRes = await fetch("http://localhost:8000/api/orders/carts/create/", {
+          const createRes = await fetch("https://eleganza-home.onrender.com/api/orders/carts/create/", {
             method: "POST",
             headers: getHeaders()
           });
@@ -68,7 +68,7 @@ export const CartProvider = ({ children }) => {
         setCartId(cart.id);
 
         // Fetch cart items
-        const itemsRes = await fetch(`http://localhost:8000/api/orders/carts/${cart.id}/items/`, { headers: getHeaders() });
+        const itemsRes = await fetch(`https://eleganza-home.onrender.com/api/orders/carts/${cart.id}/items/`, { headers: getHeaders() });
         if (!itemsRes.ok) throw new Error(`Failed to fetch cart items: ${itemsRes.status}`);
         const itemsData = await itemsRes.json();
 
@@ -107,7 +107,7 @@ export const CartProvider = ({ children }) => {
   const syncCartItem = async (itemId, data) => {
     if (!user || !cartId) return;
     try {
-      await fetch(`http://localhost:8000/api/orders/carts/${cartId}/items/${itemId}/`, {
+      await fetch(`https://eleganza-home.onrender.com/api/orders/carts/${cartId}/items/${itemId}/`, {
         method: "PATCH",
         headers: getHeaders(),
         body: JSON.stringify(data)
@@ -130,7 +130,7 @@ export const CartProvider = ({ children }) => {
         setCartItems(prev => prev.map(i => i.product?.id === product.id ? updated : i));
         await syncCartItem(existing.id, { quantity: updated.quantity });
       } else {
-        const res = await fetch(`http://localhost:8000/api/orders/carts/${cartId}/items/`, {
+        const res = await fetch(`https://eleganza-home.onrender.com/api/orders/carts/${cartId}/items/`, {
           method: "POST",
           headers: getHeaders(),
           body: JSON.stringify({ product_id: product.id, quantity: 1 })
@@ -170,7 +170,7 @@ export const CartProvider = ({ children }) => {
   const removeFromCart = async (id) => {
     if (user && cartId) {
       try {
-        await fetch(`http://localhost:8000/api/orders/carts/${cartId}/items/${id}/`, { method: "DELETE", headers: getHeaders() });
+        await fetch(`https://eleganza-home.onrender.com/api/orders/carts/${cartId}/items/${id}/`, { method: "DELETE", headers: getHeaders() });
         setCartItems(prev => prev.filter(item => item.id !== id));
       } catch (err) {
         console.error("Failed to remove item:", err);

@@ -9,7 +9,7 @@ import Swal from "sweetalert2";
 import "sweetalert2/dist/sweetalert2.min.css";
 import "./Checkout.css";
 
-const API_BASE = "http://localhost:8000/api";
+const API_BASE = "https://eleganza-home.onrender.com/api";
 
 const Checkout = () => {
   // Access cart items and ability to clear the cart
