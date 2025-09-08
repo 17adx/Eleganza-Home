@@ -2,9 +2,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
@@ -21,19 +21,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          # cache: 'npm'
 
       - name: Install Dependencies
-        run: |
-          cd frontend
-          npm install
-          
+        working-directory: frontend
+        run: npm install
+
       - name: Build
-        run: |
-          cd frontend
-          npm run build --if-present
+        working-directory: frontend
+        run: npm run build --if-present
 
       - name: Run Tests
-        run: |
-          cd frontend
-          npm test
+        working-directory: frontend
+        run: npm test
