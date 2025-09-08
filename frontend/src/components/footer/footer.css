@@ -1,0 +1,40 @@
+.footer {
+  background-color: #8DA9C4;
+}
+
+.copyright {
+  background-color: #134074;
+  color: #EEF4ED;
+}
+
+
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .footer .row {
+    text-align: center;
+    justify-content: center;
+  }
+
+  .footer .col-md-3,
+  .footer .col-md-2,
+  .footer .col-md-4 {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 319px) {
+  .footer {
+    font-size: 0.85rem;
+    padding: 0.5rem;
+    width: fit-content;
+  }
+
+  .footer .row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer .col-12 {
+    padding: 0.25rem;
+  }
+}

@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Server-Side{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- Header -->
+    <h1 class="text-center mb-4">Welcome to the Server-Side Admin Panel For Eleganza Home Website</h1>
+
+    <!-- Description -->
+    <p class="text-center">
+        This is the central dashboard for managing your Django project.
+        You can access all models, users, products, orders, and more through the admin interface.
+    </p>
+
+    <!-- Admin login button/link -->
+    <div class="d-flex justify-content-center mt-4">
+        <a href="{% url 'admin:index' %}" class="btn btn-primary btn-lg">
+            Go to Admin Login
+        </a>
+    </div>
+
+    <!-- Optional: Quick links to important sections -->
+    <div class="mt-5">
+        <h3>Quick Links:</h3>
+        <ul>
+            <li><a href="{% url 'admin:auth_user_changelist' %}">Users</a></li>
+            <li><a href="{% url 'admin:catalog_product_changelist' %}">Products</a></li>
+            <li><a href="{% url 'admin:catalog_review_changelist' %}">Reviews</a></li>
+            <li><a href="{% url 'admin:orders_order_changelist' %}">Orders</a></li>
+            <li><a href="{% url 'admin:users_sellerprofile_changelist' %}">Sellers</a></li>
+            <li><a href="{% url 'admin:users_customerprofile_changelist' %}">Customers</a></li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

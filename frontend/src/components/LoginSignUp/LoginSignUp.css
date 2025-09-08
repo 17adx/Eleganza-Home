@@ -1,0 +1,101 @@
+.form-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  padding-top: 130px;
+}
+
+.form-container .text {
+  flex-basis: 50%;
+  padding: 1rem;
+  margin: 0.5rem 0;
+  border-radius: 12px;
+  font-size: 40px;
+  font-weight: 900;
+  position: relative;
+
+} 
+
+.form-container .text p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+}
+
+
+.swal-popup {
+  border-radius: 20px;
+  font-family: 'Cairo', sans-serif;
+  padding: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.swal-title {
+  font-size: 1.6rem;
+  color: #000000;
+  font-weight: bold;
+}
+
+.swal-text {
+  font-size: 1.1rem;
+  color: #000000;
+}
+
+.swal-confirm {
+  background-color: #E7D1C9 !important;
+  color: black !important;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.swal-confirm:hover {
+  background-color: #D0B49F !important;
+}
+
+.swal-icon{
+  background-color: #F6F2F0 !important;
+  border: none;
+}
+
+@media (max-width: 991px) {
+  .form-container {
+    flex-direction: column;
+    padding-top: 190px;
+
+    .text {
+      margin-bottom: 150px;
+      
+      p {
+        font-size: 30px;
+        transform: translate(-85%, -5%);
+      }
+    }
+
+    .login {
+      margin: 0 auto;
+    }
+    .sign-up {
+      margin: 0 auto;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .form-container {
+    padding-top: 230px;
+    flex-direction: column;
+    padding-bottom: 0;
+
+    .text {
+      margin-bottom: 220px;
+    }
+  }
+}

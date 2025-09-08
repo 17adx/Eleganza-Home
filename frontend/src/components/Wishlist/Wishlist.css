@@ -1,0 +1,14 @@
+.whish-list-container {
+    padding-top: 130px; 
+}
+
+@media (max-width: 991px) {
+  .whish-list-container {
+    padding-top: 190px;
+  }
+}
+@media (max-width: 576px) {
+  .whish-list-container {
+    padding-top: 230px;
+  }
+}

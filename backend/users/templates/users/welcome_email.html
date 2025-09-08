@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome to Our Site!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #4CAF50;
+        }
+
+        p {
+            line-height: 1.6;
+        }
+
+        .button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 20px;
+            color: #fff;
+            background-color: #4CAF50;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #888;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Welcome, {{ username }}!</h1>
+        <p>Thank you for joining our site. We're excited to have you on board.</p>
+        <p>You can start exploring our services and features right away.</p>
+        <a href="http://{{ domain }}" class="button">Visit Our Site</a>
+        <div class="footer">
+            &copy; {{ site_name }}. All rights reserved.
+        </div>
+    </div>
+</body>
+
+</html>

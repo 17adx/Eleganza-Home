@@ -1,0 +1,17 @@
+.orders-container {
+  min-height: 80vh; 
+  padding-top: 120px;
+}
+
+
+@media (max-width: 991px) {
+  .orders-container {
+    padding-top: 190px;
+  }
+}
+
+@media (max-width: 576px) {
+  .orders-container {
+    padding-top: 230px;
+  }
+}

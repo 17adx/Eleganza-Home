@@ -1,0 +1,15 @@
+.checkout-container {
+    min-height: 80vh;
+    padding-top: 120px;
+}
+
+@media (max-width: 991px) {
+  .checkout-container {
+    padding-top: 190px;
+  }
+}
+@media (max-width: 576px) {
+  .checkout-container {
+    padding-top: 230px;
+  }
+}
