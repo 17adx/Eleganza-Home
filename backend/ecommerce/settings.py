@@ -1,8 +1,11 @@
 from pathlib import Path
 import os
 from datetime import timedelta
+import cloudinary_storage
 import dj_database_url
-
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # -----------------------------------
 # Base directory of the project
@@ -32,6 +35,8 @@ INSTALLED_APPS = [
     "django_filters",             # Filters for DRF
     "corsheaders",                # Handle Cross-Origin requests
     'djoser',                     # Ready-to-use user management endpoints
+    'cloudinary',                 # Cloudinary image storage
+    'cloudinary_storage',         # Cloudinary file storage
 
     # Local apps
     "users",                      # Custom user management (profiles, auth)
@@ -154,6 +159,23 @@ MEDIA_URL = "/media/"
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_ROOT = BASE_DIR / "media"
 
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# -----------------------------------
+# Cloudinary configuration
+# -----------------------------------
+CLOUDINARY_STORAGE = {
+    
+    'CLOUD_NAME': os.environ.get("CLOUD_NAME"),
+    'API_KEY': os.environ.get("CLOUD_API_KEY"),
+    'API_SECRET': os.environ.get("CLOUD_API_SECRET"),
+}
+
+cloudinary.config(
+    cloud_name=CLOUDINARY_STORAGE['CLOUD_NAME'],
+    api_key=CLOUDINARY_STORAGE['API_KEY'],
+    api_secret=CLOUDINARY_STORAGE['API_SECRET']
+)
 
 # Development: where Django will look for static files in your apps + project
 STATICFILES_DIRS = [
