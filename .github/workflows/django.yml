@@ -10,22 +10,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      VARIBLES: ${{ secrets.SECRET_KEY }}
-      VARIBLES: ${{ secrets.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY }}
-      VARIBLES: ${{ secrets.SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET }}
-      VARIBLES: ${{ secrets.EMAIL_HOST_USER }}
-      VARIBLES: ${{ secrets.EMAIL_HOST_PASSWORD }}
-      
+      DJANGO_SECRET_KEY: ${{ secrets.DJANGO_SECRET_KEY }}
+      SOCIAL_AUTH_GOOGLE_OAUTH2_KEY: ${{ secrets.SOCIAL_AUTH_GOOGLE_OAUTH2_KEY }}
+      SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET: ${{ secrets.SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET }}
+      EMAIL_HOST_USER: ${{ secrets.EMAIL_HOST_USER }}
+      EMAIL_HOST_PASSWORD: ${{ secrets.EMAIL_HOST_PASSWORD }}
+
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
           python-version: 3.x
+
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r backend/requirements.txt
+
       - name: Run Tests
         run: |
           cd backend
