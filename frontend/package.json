@@ -1,6 +1,7 @@
 {
   "name": "workshop-front-end",
   "private": true,
+  "homepage": "https://17adx.github.io/Eleganza-Home",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
