@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 # Middleware configuration
 # -----------------------------------
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     "corsheaders.middleware.CorsMiddleware",      # Handle CORS
     'django.middleware.common.CommonMiddleware',  # General request enhancements
     "django.middleware.security.SecurityMiddleware", # Security headers
@@ -149,7 +150,7 @@ USE_TZ = True
 # -----------------------------------
 STATIC_URL = "/static/"
 MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Development: where Django will look for static files in your apps + project
 STATICFILES_DIRS = [
@@ -157,8 +158,8 @@ STATICFILES_DIRS = [
 ]
 
 # Production: where `collectstatic` will collect all static files
-STATIC_ROOT = BASE_DIR / "staticfiles"
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # -----------------------------------
@@ -187,7 +188,7 @@ SIMPLE_JWT = {
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    "https://17adx.github.io/Eleganza-Home/",
+    "https://17adx.github.io",
 ]
 CSRF_TRUSTED_ORIGINS = [
     "https://17adx.github.io/Eleganza-Home/",
