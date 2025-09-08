@@ -48,10 +48,20 @@ class ProductImageSerializer(serializers.ModelSerializer):
         fields = ["id", "image"]
 
     def get_image(self, obj):
-        request = self.context.get("request")  # access request context for building full URL
+        """Return correct image URL for Cloudinary or local media."""
+        if not obj.image:
+            return None
+
+        url = str(obj.image.url)
+        # If it's already an absolute URL (Cloudinary), return as-is
+        if url.startswith("http"):
+            return url
+
+        # Otherwise, build absolute URL for local media
+        request = self.context.get("request")
         if request:
-            return request.build_absolute_uri(obj.image.url)
-        return obj.image.url
+            return request.build_absolute_uri(url)
+        return url
 
 
 # -------------------------------
@@ -85,10 +95,10 @@ class ReviewSerializer(serializers.ModelSerializer):
 # Computes final price based on discount_percent.
 class ProductSerializer(serializers.ModelSerializer):
     images = ProductImageSerializer(many=True, read_only=True)  # nested images
-    reviews = ReviewSerializer(many=True, read_only=True)        # nested reviews
-    final_price = serializers.SerializerMethodField()           # custom field to compute price after discount
+    reviews = serializers.SerializerMethodField()  # nested reviews with user info
+    final_price = serializers.SerializerMethodField()  # computed price after discount
 
-    # Allow assigning category, brand, and tags by slug
+    # Assign category, brand, and tags by slug
     category = serializers.SlugRelatedField(
         slug_field="slug",
         queryset=Category.objects.all(),
@@ -117,13 +127,38 @@ class ProductSerializer(serializers.ModelSerializer):
             "category", "brand", "discount_percent", "featured",
             "created_at", "tags", "images", "reviews", "final_price"
         ]
-        read_only_fields = ["seller"]  # prevent changing seller via API
+        read_only_fields = ["seller"]
 
-    # Compute final price after discount
     def get_final_price(self, obj):
+        """Compute final price after discount."""
         if obj.discount_percent:
             return round(float(obj.price) * (100 - obj.discount_percent) / 100, 2)
         return float(obj.price)
+
+    def get_reviews(self, obj):
+        """Return reviews nested with user info."""
+        reviews = obj.reviews.all().select_related('user')
+        serialized_reviews = []
+        for r in reviews:
+            avatar_url = None
+            if hasattr(r.user, "profile") and r.user.profile.avatar:
+                avatar_url = str(r.user.profile.avatar.url)
+                if not avatar_url.startswith("http"):
+                    request = self.context.get("request")
+                    if request:
+                        avatar_url = request.build_absolute_uri(avatar_url)
+            serialized_reviews.append({
+                "id": r.id,
+                "user": {
+                    "id": r.user.id,
+                    "username": r.user.username,
+                    "avatar": avatar_url
+                },
+                "rating": r.rating,
+                "comment": r.comment,
+                "created_at": r.created_at
+            })
+        return serialized_reviews
 
 
 # -------------------------------
