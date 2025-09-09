@@ -447,7 +447,9 @@ const SellerDashboard = () => {
           </label>
 
           {/* Tags checkboxes */}
-          <h5 className="product-form-title">Choose Tags</h5>
+          <div className="tags-heading">
+            <h5 className="product-form-title">Choose Tags</h5>
+          </div>
           <div className="tags">
             {tags.map((t) => (
               <label key={t.slug} className="input tags button-confirm">
