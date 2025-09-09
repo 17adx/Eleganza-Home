@@ -10,7 +10,7 @@ import "swiper/css/autoplay";
 import "./HeroSection.css";
 
 // Base API URL (fallback to localhost if env var not set)
-const API_BASE = import.meta.env.VITE_API_BASE || "http://127.0.0.1:8000";
+const API_BASE = import.meta.env.VITE_API_BASE || "https://eleganza-home.onrender.com/api";
 
 // Hardcoded list of featured brands to display
 const brands = [
