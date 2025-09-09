@@ -75,17 +75,17 @@ class ProductImageSerializer(serializers.ModelSerializer):
         if not obj.image:
             return None
 
-        # Convert to string
         url = str(obj.image.url)
 
-        # If the URL already starts with http(s), return it as-is (Cloudinary)
+        # ✅ If already a Cloudinary (or any external) URL, return as-is
         if url.startswith("http"):
             return url
 
-        # Otherwise, build absolute URI (local media)
+        # ✅ Otherwise, build full URL for local files
         request = self.context.get("request")
         if request:
             return request.build_absolute_uri(url)
+
         return url
 
 # -------------------------------
