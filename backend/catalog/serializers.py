@@ -40,6 +40,30 @@ class TagSerializer(serializers.ModelSerializer):
 # -------------------------------
 # Handles ProductImage model.
 # Converts the image field to an absolute URL for frontend consumption.
+# class ProductImageSerializer(serializers.ModelSerializer):
+#     image = serializers.SerializerMethodField()
+
+#     class Meta:
+#         model = ProductImage
+#         fields = ["id", "image"]
+
+#     def get_image(self, obj):
+#         if not obj.image:
+#             return None
+
+#         # Convert to string
+#         url = str(obj.image.url)
+
+#         # If the URL already starts with http(s), return it as-is (Cloudinary)
+#         if url.startswith("http"):
+#             return url
+
+#         # Otherwise, build absolute URI (local media)
+#         request = self.context.get("request")
+#         if request:
+#             return request.build_absolute_uri(url)
+#         return url
+
 class ProductImageSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
 
@@ -63,7 +87,6 @@ class ProductImageSerializer(serializers.ModelSerializer):
         if request:
             return request.build_absolute_uri(url)
         return url
-
 
 # -------------------------------
 # User Serializer
