@@ -12,9 +12,13 @@
 
 ## 📸 Preview
 
-<!-- Replace with your actual project screenshots / GIFs -->
 <p align="center">
-  <img src="https://via.placeholder.com/800x450?text=Eleganza+Home+Dashboard+Preview" alt="Eleganza Home Dashboard Preview" width="100%" />
+  <img src="https://i.ibb.co/m5XF4Nk7/1.png" alt="Eleganza Home Dashboard Preview" border="0" width="100%">
+  <img src="https://i.ibb.co/dsDCG68V/2.png" alt="Eleganza Home Dashboard Preview" border="0" width="100%">
+  <img src="https://i.ibb.co/SDF1mBdT/3.png" alt="Eleganza Home Dashboard Preview" border="0" width="100%">
+  <img src="https://i.ibb.co/dsf2M3NS/4.png" alt="Eleganza Home Dashboard Preview" border="0" width="100%">
+  <img src="https://i.ibb.co/9kzv0ZXt/5.png" alt="Eleganza Home Dashboard Preview" border="0" width="100%">
+  <img src="https://i.ibb.co/GQXWs5GM/6.png" alt="Eleganza Home Dashboard Preview" border="0" width="100%">
 </p>
 
 ---
