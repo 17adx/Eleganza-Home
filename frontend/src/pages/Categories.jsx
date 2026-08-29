@@ -5,7 +5,7 @@ import Products from '../components/products/Products';
 import './Categories.css';
 
 // API base URL, fallback to localhost if not defined in environment variables
-const API_BASE = import.meta.env.VITE_API_BASE || "http://127.0.0.1:8000";
+const API_BASE = "https://eleganza-home.onrender.com";
 
 const Categories = () => {
   // Categories state: default category "All"
