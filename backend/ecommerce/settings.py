@@ -3,7 +3,6 @@ import os
 from datetime import timedelta
 
 import dj_database_url
-
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -68,6 +67,10 @@ INSTALLED_APPS = [
     "catalog",
     "orders",
     "pages",
+
+    # Cloudinary
+    "cloudinary_storage",
+    "cloudinary",
 ]
 
 
@@ -78,6 +81,7 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
@@ -148,15 +152,26 @@ AUTHENTICATION_BACKENDS = (
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get(
     "SOCIAL_AUTH_GOOGLE_OAUTH2_KEY"
 )
+
 SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get(
     "SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET"
 )
 
-SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get("SOCIAL_AUTH_FACEBOOK_KEY")
-SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get("SOCIAL_AUTH_FACEBOOK_SECRET")
+SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get(
+    "SOCIAL_AUTH_FACEBOOK_KEY"
+)
 
-SOCIAL_AUTH_TWITTER_KEY = os.environ.get("SOCIAL_AUTH_TWITTER_KEY")
-SOCIAL_AUTH_TWITTER_SECRET = os.environ.get("SOCIAL_AUTH_TWITTER_SECRET")
+SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get(
+    "SOCIAL_AUTH_FACEBOOK_SECRET"
+)
+
+SOCIAL_AUTH_TWITTER_KEY = os.environ.get(
+    "SOCIAL_AUTH_TWITTER_KEY"
+)
+
+SOCIAL_AUTH_TWITTER_SECRET = os.environ.get(
+    "SOCIAL_AUTH_TWITTER_SECRET"
+)
 
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = os.environ.get(
     "SOCIAL_AUTH_LOGIN_REDIRECT_URL",
@@ -164,7 +179,9 @@ SOCIAL_AUTH_LOGIN_REDIRECT_URL = os.environ.get(
 )
 
 SOCIAL_AUTH_LOGIN_ERROR_URL = "/auth/cancelled/"
+
 LOGOUT_REDIRECT_URL = "/"
+
 SOCIAL_AUTH_POSTGRES_JSONFIELD = True
 
 SOCIAL_AUTH_PIPELINE = (
@@ -217,18 +234,34 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # -----------------------------------
 LANGUAGE_CODE = "en-us"
+
 TIME_ZONE = "UTC"
+
 USE_I18N = True
+
 USE_TZ = True
+
+
+# -----------------------------------
+# Cloudinary
+# -----------------------------------
+CLOUDINARY_STORAGE = {
+    "CLOUD_NAME": os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    "API_KEY": os.environ.get("CLOUDINARY_API_KEY"),
+    "API_SECRET": os.environ.get("CLOUDINARY_API_SECRET"),
+    "SECURE": True,
+}
 
 
 # -----------------------------------
 # Static & Media
 # -----------------------------------
 STATIC_URL = "/static/"
+
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 MEDIA_URL = "/media/"
+
 MEDIA_ROOT = BASE_DIR / "media"
 
 STATICFILES_DIRS = [
@@ -236,6 +269,23 @@ STATICFILES_DIRS = [
 ]
 
 
+STORAGES = {
+    "default": {
+        "BACKEND": (
+            "cloudinary_storage.storage.MediaCloudinaryStorage"
+        ),
+    },
+    "staticfiles": {
+        "BACKEND": (
+            "whitenoise.storage.CompressedManifestStaticFilesStorage"
+        ),
+    },
+}
+
+
+# -----------------------------------
+# Default primary key field
+# -----------------------------------
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
@@ -290,7 +340,10 @@ CSRF_TRUSTED_ORIGINS = [
 # -----------------------------------
 # HTTPS / Security
 # -----------------------------------
-SECURE_SSL_REDIRECT = env_bool("SECURE_SSL_REDIRECT", False)
+SECURE_SSL_REDIRECT = env_bool(
+    "SECURE_SSL_REDIRECT",
+    False,
+)
 
 SECURE_HSTS_SECONDS = int(
     os.environ.get("SECURE_HSTS_SECONDS", "0")
@@ -343,8 +396,13 @@ EMAIL_USE_TLS = env_bool(
     True,
 )
 
-EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER = os.environ.get(
+    "EMAIL_HOST_USER"
+)
+
+EMAIL_HOST_PASSWORD = os.environ.get(
+    "EMAIL_HOST_PASSWORD"
+)
 
 DEFAULT_FROM_EMAIL = os.environ.get(
     "DEFAULT_FROM_EMAIL",
