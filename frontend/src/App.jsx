@@ -22,7 +22,7 @@ import Activation from './components/auth/Activation/Activation.jsx';
 import ResetPassword from "./components/auth/LoginSignUp/Resend/ResetPassword.jsx";
 import PasswordResetConfirm from './pages/PasswordResetConfirm.jsx';
 import Cart from './pages/Cart';
-import Checkout from './components/checkout/Checkout.jsx';
+import Checkout from './components/Checkout/Checkout.jsx';
 
 // CSS
 import 'normalize.css';
