@@ -20,6 +20,9 @@ db.sqlite3
 .idea/
 .vscode/
 
+# Local database dumps
+local_data.json
+
 # Django static & media
 /staticfiles/
 /media/

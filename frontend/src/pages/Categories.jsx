@@ -1,41 +1,60 @@
-import React, { useState, useEffect } from 'react';
-import Navbar from '../components/Navbar/navbar';
-import Footer from '../components/footer/footer';
-import Products from '../components/products/Products';
-import './Categories.css';
+import React, { useEffect, useState } from "react";
 
-// API base URL, fallback to localhost if not defined in environment variables
-const API_BASE = "https://eleganza-home.onrender.com";
+import Navbar from "../components/common/Navbar/navbar";
+
+import Footer from "../components/common/Footer/footer";
+
+import Products from "../components/catalog/Products/Products";
+
+import { catalog } from "../api/catalog";
+
+import "./Categories.css";
 
 const Categories = () => {
   // Categories state: default category "All"
-  const [categories, setCategories] = useState([{ id: 'all', name: 'All' }]);
-  // Selected category state: default is "All"
-  const [selectedCategory, setSelectedCategory] = useState({ id: 'all', name: 'All' });
-  const [loading, setLoading] = useState(true);
+  const [categories, setCategories] = useState([
+    {
+      id: "all",
+      name: "All",
+      slug: "all",
+    },
+  ]);
 
-  // Fetch categories from API
+  // Selected category state: default is "All"
+  const [selectedCategory, setSelectedCategory] = useState({
+    id: "all",
+    name: "All",
+    slug: "all",
+  });
+
+  // Fetch categories from the centralized API layer
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/catalog/categories/`, {
-          headers: { Accept: "application/json" }
-        });
-        const data = await res.json();
+        const response = await catalog.listCategories();
+
+        const data = response.data;
 
         console.log("Categories API response:", data);
 
         if (Array.isArray(data.results)) {
-          // Merge default "All" category with fetched categories
           setCategories([
-            { id: 'all', name: 'All', slug: 'all' },
-            ...data.results.map(cat => ({ ...cat, slug: cat.slug }))
+            {
+              id: "all",
+              name: "All",
+              slug: "all",
+            },
+            ...data.results.map((category) => ({
+              ...category,
+              slug: category.slug,
+            })),
           ]);
         }
-      } catch (err) {
-        console.error("Failed to fetch categories:", err);
-      } finally {
-        setLoading(false);
+      } catch (error) {
+        console.error(
+          "Failed to fetch categories:",
+          error
+        );
       }
     };
 
@@ -43,34 +62,43 @@ const Categories = () => {
   }, []);
 
   return (
-    <>
-      <main>
-        <Navbar />
-        <div className="categories-container">
-          {/* Sidebar: list of categories */}
-          <aside className="sidebar">
-            <h5>Categories</h5>
-            <ul>
-              {categories.map((cat) => (
-                <li
-                  key={cat.id}
-                  className={selectedCategory.id === cat.id ? 'active' : ''}
-                  onClick={() => setSelectedCategory(cat)}
-                >
-                  {cat.name}
-                </li>
-              ))}
-            </ul>
-          </aside>
+    <main>
+      <Navbar />
 
-          {/* Main content: show products of the selected category */}
-          <main className="main-content">
-            <Products selectedCategory={selectedCategory} />
-          </main>
-        </div>
-        <Footer />
-      </main>
-    </>
+      <div className="categories-container">
+        {/* Categories Sidebar */}
+        <aside className="sidebar">
+          <h5>Categories</h5>
+
+          <ul>
+            {categories.map((category) => (
+              <li
+                key={category.id}
+                className={
+                  selectedCategory.id === category.id
+                    ? "active"
+                    : ""
+                }
+                onClick={() =>
+                  setSelectedCategory(category)
+                }
+              >
+                {category.name}
+              </li>
+            ))}
+          </ul>
+        </aside>
+
+        {/* Products */}
+        <main className="main-content">
+          <Products
+            selectedCategory={selectedCategory}
+          />
+        </main>
+      </div>
+
+      <Footer />
+    </main>
   );
 };
 

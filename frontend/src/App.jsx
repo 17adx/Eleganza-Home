@@ -2,27 +2,27 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 // Context Providers
-import { UserProvider } from './contexts/UserContext/UserContext';
+import { AuthProvider } from './contexts/AuthContext/AuthContext.jsx';
 import { CartProvider } from './contexts/CartContext/CartContext';
 
 // Pages
 import HomePage from './pages/Home';
-import ProductsPage from './pages/ProductsPage';
-import SingleProduct from './components/SingleProduct/SingleProduct';
+import Products from './pages/Products';
+import SingleProduct from './components/catalog/SingleProduct/SingleProduct';
 import Categories from './pages/Categories';
 import Login from './pages/Login';
 import Profile from './pages/Profile';
-import OrdersPage from "./pages/OrdersPage";
-import WishlistPage from "./pages/WishlistPage";
+import Orders from "./pages/Orders";
+import Wishlist from "./pages/Wishlist";
 
 // Components
-import SocialLoginCallback from './components/SocialLoginCallback/SocialLoginCallback';
-import PrivateRoute from "./contexts/PrivateRoute/PrivateRoute.jsx";
-import Activation from './contexts/Activation/Activation.jsx';
-import ResetPassword from "./components/LoginSignUp/Resend/ResetPassword.jsx";
+import SocialLoginCallback from './components/auth/SocialLoginCallback/SocialLoginCallback';
+import PrivateRoute from "./routes/PrivateRoute.jsx";
+import Activation from './components/auth/Activation/Activation.jsx';
+import ResetPassword from "./components/auth/LoginSignUp/Resend/ResetPassword.jsx";
 import PasswordResetConfirm from './pages/PasswordResetConfirm.jsx';
 import Cart from './pages/Cart';
-import Checkout from './components/Checkout/Checkout';
+import Checkout from './components/checkout/Checkout.jsx';
 
 // CSS
 import 'normalize.css';
@@ -31,13 +31,13 @@ import './App.css';
 const App = () => {
   return (
     // Provide user and cart context to the entire app
-    <UserProvider>
+    <AuthProvider>
       <CartProvider>
         {/* React Router Routes */}
         <Routes>
           {/* Public routes */}
           <Route path="/" element={<HomePage />} />
-          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/products" element={<Products />} />
           <Route path="/product/:id" element={<SingleProduct />} />
           <Route path="/categories" element={<Categories />} />
           <Route path="/login" element={<Login />} />
@@ -57,11 +57,11 @@ const App = () => {
               </PrivateRoute>
             } 
           />
-          <Route path="/orders" element={<OrdersPage />} />
-          <Route path="/wishlist" element={<WishlistPage />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/wishlist" element={<Wishlist />} />
         </Routes>
       </CartProvider>
-    </UserProvider>
+    </AuthProvider>
   );
 };
 

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import Navbar from '../components/Navbar/navbar';
-import Footer from '../components/footer/footer';
-import { useCart } from '../contexts/CartContext/CartContext';
+import Navbar from '../components/common/Navbar/navbar';
+import Footer from '../components/common/Footer/footer';
+import useCart from "../hooks/useCart";
 import {
   Card,
   Button,

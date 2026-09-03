@@ -64,13 +64,17 @@ class CartSerializer(serializers.ModelSerializer):
 # OrderItem Serializer
 # -----------------------------------
 class OrderItemSerializer(serializers.ModelSerializer):
-    # Display product title (read-only) for convenience
     product_title = serializers.ReadOnlyField(source="product.title")
+
+    price = serializers.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        read_only=True,
+    )
 
     class Meta:
         model = OrderItem
         fields = ["id", "product", "product_title", "price", "quantity"]
-
 
 # -----------------------------------
 # Order Serializer

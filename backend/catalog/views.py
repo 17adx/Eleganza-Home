@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import filters as drf_filters
 from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import rest_framework as django_filters
-from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from .models import Category, Brand, Tag, Product, ProductImage, Review, Wishlist
 from .serializers import (
     CategorySerializer, BrandSerializer, TagSerializer,
@@ -89,10 +89,19 @@ class ProductViewSet(viewsets.ModelViewSet):
     Provides CRUD for products with filtering, search, and custom seller views.
     Only authenticated users can modify; read-only for others.
     """
-    queryset = Product.objects.all().order_by("-created_at")
+    queryset = (
+        Product.objects
+        .select_related("seller", "category", "brand")
+        .prefetch_related(
+            "tags",
+            "images",
+            "reviews__user__profile",
+        )
+        .order_by("-created_at")
+    )
     serializer_class = ProductSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsSellerOrReadOnly]
-    parser_classes = [MultiPartParser, FormParser]  # Handle file uploads
+    parser_classes = [MultiPartParser, FormParser, JSONParser]  # Handle file uploads
     filter_backends = [DjangoFilterBackend, drf_filters.SearchFilter]
     search_fields = ["title", "description"]
     filterset_class = ProductFilter
@@ -127,7 +136,17 @@ class ProductViewSet(viewsets.ModelViewSet):
         """
         Custom endpoint to retrieve all featured products.
         """
-        featured_products = Product.objects.filter(featured=True).order_by("-created_at")
+        featured_products = (
+            Product.objects
+            .filter(featured=True)
+            .select_related("seller", "category", "brand")
+            .prefetch_related(
+                "tags",
+                "images",
+                "reviews__user__profile",
+            )
+            .order_by("-created_at")
+        )
         serializer = self.get_serializer(featured_products, many=True)
         return Response(serializer.data)
 

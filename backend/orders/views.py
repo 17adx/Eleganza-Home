@@ -4,7 +4,7 @@ from rest_framework.decorators import action
 from django.shortcuts import get_object_or_404
 from .models import Cart, CartItem, Order, OrderItem
 from .serializers import CartSerializer, CartItemSerializer, OrderSerializer
-
+from .permissions import IsCartOwner
 # -----------------------------------
 # Cart ViewSet
 # -----------------------------------
@@ -58,49 +58,144 @@ class CartViewSet(viewsets.ModelViewSet):
 class CartItemViewSet(viewsets.ModelViewSet):
     """
     Handles CRUD operations for items inside a cart.
-    Supports updating quantity via custom action.
+
+    ```
+    Access is restricted to the owner of the cart.
     """
+
     serializer_class = CartItemSerializer
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.AllowAny, IsCartOwner]
 
     def get_queryset(self):
         """
-        Returns items for the specified cart.
+        Return only items belonging to a cart owned by the current
+        authenticated user or guest session.
         """
         cart_id = self.kwargs["cart_pk"]
-        return CartItem.objects.filter(cart_id=cart_id).order_by("id")
+
+        queryset = CartItem.objects.filter(
+            cart_id=cart_id
+        ).select_related(
+            "product",
+            "product__category",
+            "product__brand",
+            "product__seller",
+        ).prefetch_related(
+            "product__images",
+            "product__reviews",
+            "product__reviews__user",
+            "product__tags",
+        ).order_by("id")
+
+        if self.request.user.is_authenticated:
+            return queryset.filter(cart__user=self.request.user)
+
+        session_key = self.request.query_params.get("session_key", "")
+
+        if session_key:
+            return queryset.filter(
+                cart__user__isnull=True,
+                cart__session_key=session_key,
+            )
+
+        return CartItem.objects.none()
 
     def perform_create(self, serializer):
         """
-        Create a new cart item and associate it with the correct cart.
+        Create an item only inside a cart owned by the current user/session.
         """
         cart_id = self.kwargs["cart_pk"]
-        cart = get_object_or_404(Cart, pk=cart_id)
+
+        cart_queryset = Cart.objects.filter(pk=cart_id)
+
+        if self.request.user.is_authenticated:
+            cart_queryset = cart_queryset.filter(
+                user=self.request.user
+            )
+        else:
+            session_key = self.request.query_params.get("session_key", "")
+
+            if not session_key:
+                from rest_framework.exceptions import PermissionDenied
+
+                raise PermissionDenied(
+                    "A valid session_key is required for guest carts."
+                )
+
+            cart_queryset = cart_queryset.filter(
+                user__isnull=True,
+                session_key=session_key,
+            )
+
+        cart = cart_queryset.first()
+
+        if cart is None:
+            from rest_framework.exceptions import PermissionDenied
+
+            raise PermissionDenied(
+                "You do not have permission to access this cart."
+            )
+
         serializer.save(cart=cart)
 
     @action(detail=True, methods=["patch"])
     def update_quantity(self, request, cart_pk=None, pk=None):
         """
-        Custom action to increase or decrease the quantity of a cart item.
-        Expects 'action' ('increase' or 'decrease') and optional 'quantity' in request data.
-        """
-        item = get_object_or_404(CartItem, pk=pk, cart_id=cart_pk)
-        action_type = request.data.get("action")
-        quantity = int(request.data.get("quantity", 1))
+        Increase or decrease the quantity of a cart item.
 
-        if action_type == "increase":
-            item.quantity += quantity
-        elif action_type == "decrease":
-            item.quantity = max(1, item.quantity - quantity)  # Prevent quantity from going below 1
-        else:
+        The item is resolved through get_queryset(), so ownership
+        checks are applied before modification.
+        """
+        try:
+            item = self.get_queryset().get(pk=pk)
+        except CartItem.DoesNotExist:
             return Response(
-                {"error": "Invalid action, use 'increase' or 'decrease'"},
+                {"detail": "Cart item not found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        action_type = request.data.get("action")
+
+        try:
+            quantity = int(request.data.get("quantity", 1))
+        except (TypeError, ValueError):
+            return Response(
+                {"error": "Quantity must be a valid integer."},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        item.save()
+        if quantity < 1:
+            return Response(
+                {"error": "Quantity must be at least 1."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        if action_type == "increase":
+            item.quantity += quantity
+
+        elif action_type == "decrease":
+            item.quantity = max(1, item.quantity - quantity)
+
+        else:
+            return Response(
+                {
+                    "error": (
+                        "Invalid action, use 'increase' or 'decrease'"
+                    )
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        item.save(update_fields=["quantity"])
+
         serializer = self.get_serializer(item)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK,
+        )
+
+
 
 
 # -----------------------------------

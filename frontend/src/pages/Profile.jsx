@@ -1,7 +1,7 @@
 import React from "react";
-import Navbar from "../components/Navbar/navbar";
-import ProfileWrapper from "../contexts/ProfileWrapper/ProfileWrapper";
-import Footer from "../components/footer/footer";
+import Navbar from "../components/common/Navbar/navbar";
+import ProfileWrapper from "../components/profile/ProfileWrapper/ProfileWrapper";
+import Footer from "../components/common/Footer/footer";
 
 const Profile = () => {
   return (

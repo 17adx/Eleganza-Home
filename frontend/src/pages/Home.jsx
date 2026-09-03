@@ -1,9 +1,9 @@
 import React from 'react';
-import Navbar from '../components/Navbar/navbar';
-import HeroSection from '../components/HeroSection/HeroSection';
-import Products from '../components/products/Products';
-import AboutUs from '../components/AboutUs/aboutUs';
-import Footer from '../components/footer/footer';
+import Navbar from '../components/common/Navbar/navbar';
+import HeroSection from '../components/catalog/HeroSection/HeroSection';
+import Products from '../components/catalog/Products/Products';
+import AboutUs from '../components/common/AboutUs/aboutUs';
+import Footer from '../components/common/Footer/footer';
 
 const Home = () => {
   return (
